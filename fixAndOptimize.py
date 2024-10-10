@@ -1,6 +1,4 @@
 import subprocess
-import re
-import numpy as np
 from itertools import combinations
 import math
 from pysat.formula import WCNF
