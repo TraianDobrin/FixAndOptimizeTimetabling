@@ -24,7 +24,7 @@ def evaluate(x,timeout):
     for v in x:
         wcnf.append([v])
 
-    path_to_formula=r"..\..\PycharmProjects\tentativa\current_formulab1.wcnf"
+    path_to_formula=r"..\..\Documents\GitHub\FixAndOptimizeTimetabling\current_formulab1.wcnf"
     with open("current_formulab1.wcnf", 'w') as file:
         # Write the header line
         file.write(wcnf.to_dimacs())
@@ -89,7 +89,8 @@ initnr=len(solution)
 no_change=0
 ind_perm=0
 ind=0
-arr=range(int(len(solution)/25))
+varToFix = read_numbers_from_file("variableToFixOn.txt")
+arr=range(int(len(varToFix)))
 subsets=[list(combination) for combination in combinations(arr, k)]
 #print(solution)
 cost=evaluate(solution,100000)
@@ -104,16 +105,19 @@ while k<=len(arr):
     curr_sol=[]
     ind=0
     #print(arr)
-    for i in range(int(initnr/25)):
-        if i not in arr:
-            for j in range(25):
-#                 print(len(solution))
-#                 print(ind)
-#                 print(solution[ind])
-                curr_sol.append(solution[ind])
-                ind+=1
-        else:
-            ind+=25
+    for a in arr:
+        curr_sol.append(solution[varToFix[a]])
+        print(varToFix[a])
+#     for i in range(int(initnr/25)):
+#         if i not in arr:
+#             for j in range(25):
+# #                 print(len(solution))
+# #                 print(ind)
+# #                 print(solution[ind])
+#                 curr_sol.append(solution[varToFix[ind]])
+#                 ind+=1
+#         else:
+#             ind+=25
     #print(curr_sol)
     with open("solution_memory.txt", 'w') as f:
         for item in curr_sol:
